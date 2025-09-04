@@ -9,7 +9,7 @@ import {
   PaginationItem,
   PaginationLink,
   PaginationNext,
-  PaginationPrevious
+  PaginationPrevious,
 } from '@/components/ui/pagination'
 import { fetchRecipes, Recipe } from '@/services/recipe.service'
 import { useMutation } from '@tanstack/react-query'
@@ -63,7 +63,7 @@ export default function Home() {
   })
   const limitDataPerPage = 5
   const pathname = usePathname()
-  
+
   const searchParams = useSearchParams()
   const params = new URLSearchParams(searchParams)
   params.set('limit', String(limitDataPerPage))
@@ -104,7 +104,7 @@ export default function Home() {
   if (isRecipeError) return <h1>Error</h1>
 
   return (
-    <div>
+    <div className='px-8 py-6'>
       <Input
         value={searchInput}
         onChange={(e) => {

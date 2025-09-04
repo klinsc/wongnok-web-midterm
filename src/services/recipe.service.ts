@@ -75,33 +75,33 @@ export const fetchRecipes = async (data: fetchRecipeRequest) => {
     return recipesFetch.data
   } catch (e) {
     console.error(e)
+    return { results: [], total: 0 }
   }
 }
 
 export const fetchRecipeDetails = async (recipeId: string) => {
-  const recipeDetails = await api.get<RecipeDetails>(`/api/v1/food-recipes/${recipeId}`)
+  const recipeDetails = await api.get<RecipeDetails>(
+    `/api/v1/food-recipes/${recipeId}`
+  )
   return recipeDetails
 }
 
 export const createRecipe = async (data: RecipePayload) => {
-  const recipeDetails = await api.post<RecipeForm>(
-    '/api/v1/food-recipes',
-    {
-      ...data,
-    }
-  )
+  const recipeDetails = await api.post<RecipeForm>('/api/v1/food-recipes', {
+    ...data,
+  })
   return recipeDetails
 }
 
 export const fetchRecipesByUser = async () => {
   const session = await auth()
-  console.log('session servcie',session )
+  console.log('session servcie', session)
   const recipes = await axios.get<{ results: Recipe[] }>(
     `http://localhost:8000/api/v1/users/${session?.userId}/food-recipes`,
-    {headers:
-      {
-        Authorization: `Bearer ${session?.accessToken}`
-      }
+    {
+      headers: {
+        Authorization: `Bearer ${session?.accessToken}`,
+      },
     }
   )
   return recipes.data.results
