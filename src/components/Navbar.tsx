@@ -1,11 +1,11 @@
 'use client'
 
-import Image from "next/image"
+import Image from 'next/image'
 import { Button } from './ui/button'
 import { useSession, signIn, signOut } from 'next-auth/react'
 
 const Navbar = () => {
-  const {data: session} = useSession()
+  const { data: session } = useSession()
 
   return (
     <div className='flex justify-between'>
@@ -15,9 +15,10 @@ const Navbar = () => {
         height={49}
         alt='wongnok-logo'
         style={{
-          maxWidth: "100%",
-          height: "auto"
-        }} />
+          maxWidth: '100%',
+          height: 'auto',
+        }}
+      />
       {session ? (
         <div className='flex flex-col'>
           ชื่อ {session.user?.name}
@@ -36,14 +37,15 @@ const Navbar = () => {
             width={24}
             height={24}
             style={{
-              maxWidth: "100%",
-              height: "auto"
-            }} />
+              maxWidth: '100%',
+              height: 'auto',
+            }}
+          />
           เข้าระบบ
         </Button>
       )}
     </div>
-  );
+  )
 }
 
 export default Navbar
