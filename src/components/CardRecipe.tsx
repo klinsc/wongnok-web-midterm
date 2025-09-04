@@ -1,7 +1,7 @@
 import { CardRecipeProps } from '@/app/page'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import { Card, CardContent, CardFooter } from './ui/card'
-import Image from 'next/image'
+import Image from "next/legacy/image"
 
 const CardRecipe = ({
   name,

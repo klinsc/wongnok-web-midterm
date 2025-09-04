@@ -1,7 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { fetchRecipeDetails } from '@/services/recipe.service'
 import { useQuery } from '@tanstack/react-query'
-import Image from 'next/image'
+import Image from "next/legacy/image"
 
 type RecipeDetailsIdProps = {
   params: Promise<{
