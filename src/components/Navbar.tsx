@@ -10,6 +10,8 @@ const Navbar = () => {
   return (
     <div className='flex justify-between'>
       <Image
+        unoptimized
+        priority
         src='/wongnok-with-name-logo.png'
         width={182}
         height={49}
