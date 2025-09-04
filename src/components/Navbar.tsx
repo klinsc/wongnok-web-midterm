@@ -3,6 +3,15 @@
 import { signIn, signOut, useSession } from 'next-auth/react'
 import { Button } from './ui/button'
 import { useRouter } from 'next/navigation'
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from './ui/navigation-menu'
+import Link from 'next/link'
 
 const Navbar = () => {
   // router
@@ -35,27 +44,41 @@ const Navbar = () => {
         }}
       >
         {session ? (
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-              gap: '8px',
-            }}
-          >
-            ชื่อผู้ใช้: {session.user?.name}
-            <Button
-              className='text-secondary bg-none'
-              variant='outline'
-              onClick={() => signOut()}
-              style={{
-                cursor: 'pointer',
-              }}
-            >
-              ลงชื่อออก
-            </Button>
-          </div>
+          <NavigationMenu viewport={false}>
+            <NavigationMenuList>
+              <NavigationMenuItem className='relative'>
+                <NavigationMenuTrigger>
+                  {session.user?.name}
+                </NavigationMenuTrigger>
+                <NavigationMenuContent className='absolute right-0 z-50'>
+                  <ul>
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <Link href='#'>โปรไฟล์ของฉัน</Link>
+                      </NavigationMenuLink>
+                    </li>
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <Link href='#'>สูตรอาหารของฉัน</Link>
+                      </NavigationMenuLink>
+                    </li>
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <Link href='#'>สูตรอาหารสุดโปรด</Link>
+                      </NavigationMenuLink>
+                    </li>
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <Link href='' onClick={() => signOut()}>
+                          ออกจากระบบ
+                        </Link>
+                      </NavigationMenuLink>
+                    </li>
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
         ) : (
           <Button
             style={{
