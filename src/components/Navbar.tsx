@@ -58,9 +58,11 @@ const Navbar = () => {
           </div>
         ) : (
           <Button
-            className='text-white'
-            style={{ backgroundColor: '#E030F6', cursor: 'pointer' }}
-            variant='default'
+            style={{
+              color: '#E030F6',
+              cursor: 'pointer',
+            }}
+            variant='outline'
             onClick={() => signIn('keycloak')}
           >
             เข้าสู่ระบบ
