@@ -1,10 +1,13 @@
 'use client'
 
-import Image from 'next/image'
+import { signIn, signOut, useSession } from 'next-auth/react'
 import { Button } from './ui/button'
-import { useSession, signIn, signOut } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 
 const Navbar = () => {
+  // router
+  const router = useRouter()
+
   const { data: session } = useSession()
 
   return (
@@ -16,7 +19,9 @@ const Navbar = () => {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
+          cursor: 'pointer',
         }}
+        onClick={() => router.push('/')}
       >
         <img src='/wongnok-with-name-logo.png' alt='wongnok-logo' />
       </div>
@@ -39,13 +44,22 @@ const Navbar = () => {
               gap: '8px',
             }}
           >
-            ชื่อ {session.user?.name}
-            <Button onClick={() => signOut()}>SingOut</Button>
+            ชื่อผู้ใช้: {session.user?.name}
+            <Button
+              className='text-secondary bg-none'
+              variant='outline'
+              onClick={() => signOut()}
+              style={{
+                cursor: 'pointer',
+              }}
+            >
+              ลงชื่อออก
+            </Button>
           </div>
         ) : (
           <Button
             className='text-white'
-            style={{ backgroundColor: '#E030F6' }}
+            style={{ backgroundColor: '#E030F6', cursor: 'pointer' }}
             variant='default'
             onClick={() => signIn('keycloak')}
           >
