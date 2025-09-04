@@ -2,21 +2,19 @@ import { RecipeForm } from '@/app/create-recipe/page'
 import { auth } from '@/lib/auth'
 import { api } from '@/lib/axios'
 import axios from 'axios'
-import { getServerSession } from 'next-auth'
-import { getSession } from 'next-auth/react'
 
-type User = {
+export type User = {
   id: string
   firstName: string
   lastName: string
 }
 
-type CookingDuration = {
+export type CookingDuration = {
   id: number
   name: string
 }
 
-type Difficulty = {
+export type Difficulty = {
   id: number
   name: string
 }
