@@ -1,6 +1,6 @@
-import { CardRecipeProps } from "@/app/page";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { Card, CardContent, CardFooter } from "./ui/card";
+import { CardRecipeProps } from '@/app/page'
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
+import { Card, CardContent, CardFooter } from './ui/card'
 import Image from 'next/image'
 
 const CardRecipe = ({
@@ -14,7 +14,16 @@ const CardRecipe = ({
   <Card className='w-[276px] h-[390px]'>
     <div>
       <div className='h-[158px] relative rounded-t-lg pb-4'>
-        <Image src={imageUrl} alt={`${name} image`} fill objectFit='cover' />
+        {imageUrl ? (
+          <Image src={imageUrl} alt={`${name} image`} fill objectFit='cover' />
+        ) : (
+          <Image
+            src={'/images/istockphoto-1396814518-612x612.jpg'}
+            alt={`${name} image`}
+            fill
+            objectFit='cover'
+          />
+        )}
       </div>
       <div>
         <CardContent>
@@ -39,7 +48,7 @@ const CardRecipe = ({
         <div>
           <Avatar>
             <AvatarImage src='https://github.com/shadcn.png' />
-            <AvatarFallback>{user.firstName}</AvatarFallback>
+            <AvatarFallback>{user?.firstName}</AvatarFallback>
           </Avatar>
         </div>
       </CardFooter>
