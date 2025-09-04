@@ -68,8 +68,7 @@ export const fetchRecipes = async (data: fetchRecipeRequest) => {
       results: Recipe[]
       total: number
     }>(
-      // `/api/v1/food-recipes?page=${data.page}&limit=${data.limit}&search=${data.search}`
-      '/api/v1/food-recipes?page=1&limit=10'
+      `/api/v1/food-recipes?page=${data.page}&limit=${data.limit}&search=${data.search}`
     )
 
     return recipesFetch.data

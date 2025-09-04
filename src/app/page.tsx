@@ -48,6 +48,7 @@ export default function Home() {
     results: [],
     total: 0,
   })
+
   const {
     mutateAsync: getRecipe,
     isPending: isRecipeLoading,
@@ -87,6 +88,7 @@ export default function Home() {
   }, [currentPage])
 
   const handleSearch = useDebouncedCallback((data) => {
+    debugger
     params.set('page', '1')
     if (searchInput === '') {
       params.delete('search')
