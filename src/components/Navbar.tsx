@@ -8,44 +8,51 @@ const Navbar = () => {
   const { data: session } = useSession()
 
   return (
-    <div className='flex justify-between'>
-      <Image
-        unoptimized
-        priority
-        src='/wongnok-with-name-logo.png'
-        width={182}
-        height={49}
-        alt='wongnok-logo'
+    <div className='flex justify-between items-center px-4 h-16 border-b'>
+      <div
         style={{
-          maxWidth: '100%',
-          height: 'auto',
+          width: 182,
+          height: 50,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
         }}
-      />
-      {session ? (
-        <div className='flex flex-col'>
-          ชื่อ {session.user?.name}
-          <Button onClick={() => signOut()}>SingOut</Button>
-        </div>
-      ) : (
-        <Button
-          className='text-primary-a'
-          variant='ghost'
-          onClick={() => signIn('keycloak')}
-        >
-          <Image
-            color='red'
-            src='/icons/person.svg'
-            alt='icon person'
-            width={24}
-            height={24}
+      >
+        <img src='/wongnok-with-name-logo.png' alt='wongnok-logo' />
+      </div>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: '8px',
+        }}
+      >
+        {session ? (
+          <div
             style={{
-              maxWidth: '100%',
-              height: 'auto',
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: '8px',
             }}
-          />
-          เข้าระบบ
-        </Button>
-      )}
+          >
+            ชื่อ {session.user?.name}
+            <Button onClick={() => signOut()}>SingOut</Button>
+          </div>
+        ) : (
+          <Button
+            className='text-white'
+            style={{ backgroundColor: '#E030F6' }}
+            variant='default'
+            onClick={() => signIn('keycloak')}
+          >
+            เข้าสู่ระบบ
+          </Button>
+        )}
+      </div>
     </div>
   )
 }
