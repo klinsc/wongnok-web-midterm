@@ -108,7 +108,7 @@ export default function Home() {
   return (
     <div className='px-8 py-6'>
       <Input
-        placeholder='🔍ค้นหาสูตรอาหาร...'
+        placeholder='ค้นหาสูตรอาหาร...'
         value={searchInput}
         onChange={(e) => {
           setSearchInput(e.target.value)
