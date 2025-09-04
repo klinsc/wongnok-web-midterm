@@ -109,3 +109,11 @@ export const fetchUserProfile = async (userId: string) => {
   const userProfile = await api.get<User>(`/api/v1/users/${userId}`)
   return userProfile.data
 }
+
+export const updateUserProfile = async (
+  userId: string,
+  data: Partial<User>
+) => {
+  const updatedProfile = await api.put<User>(`/api/v1/users/${userId}`, data)
+  return updatedProfile.data
+}
