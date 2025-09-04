@@ -1,7 +1,7 @@
 import { CardRecipeProps } from '@/app/page'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import { Card, CardContent, CardFooter } from './ui/card'
-import Image from "next/legacy/image"
+import Image from "next/image"
 
 const CardRecipe = ({
   name,
@@ -15,14 +15,25 @@ const CardRecipe = ({
     <div>
       <div className='h-[158px] relative rounded-t-lg pb-4'>
         {imageUrl ? (
-          <Image src={imageUrl} alt={`${name} image`} fill objectFit='cover' />
+          <Image
+            src={imageUrl}
+            alt={`${name} image`}
+            fill
+            style={{
+              maxWidth: "100%",
+              height: "auto",
+              objectFit: "cover"
+            }} />
         ) : (
           <Image
             src={'/images/istockphoto-1396814518-612x612.jpg'}
             alt={`${name} image`}
             fill
-            objectFit='cover'
-          />
+            style={{
+              maxWidth: "100%",
+              height: "auto",
+              objectFit: "cover"
+            }} />
         )}
       </div>
       <div>

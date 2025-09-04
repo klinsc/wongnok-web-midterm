@@ -1,7 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { fetchRecipeDetails } from '@/services/recipe.service'
 import { useQuery } from '@tanstack/react-query'
-import Image from "next/legacy/image"
+import Image from "next/image"
 
 type RecipeDetailsIdProps = {
   params: Promise<{
@@ -35,7 +35,10 @@ const RecipeDetailsId = async ({ params }: RecipeDetailsIdProps) => {
               src={data?.data.imageUrl || '/beef_wellington.png'}
               alt='beef wellington'
               fill
-            />
+              style={{
+                maxWidth: "100%",
+                height: "auto"
+              }} />
           </div>
           <div className='rounded-sm px-2 bg-secondary-100 text-secondary-900'>
             <p>{data?.data.cookingDuration.name} นาที</p>
@@ -47,7 +50,7 @@ const RecipeDetailsId = async ({ params }: RecipeDetailsIdProps) => {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default RecipeDetailsId

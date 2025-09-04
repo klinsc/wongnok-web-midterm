@@ -1,6 +1,6 @@
 'use client'
 
-import Image from "next/legacy/image"
+import Image from "next/image"
 import { Button } from './ui/button'
 import { useSession, signIn, signOut } from 'next-auth/react'
 
@@ -14,7 +14,10 @@ const Navbar = () => {
         width={182}
         height={49}
         alt='wongnok-logo'
-      />
+        style={{
+          maxWidth: "100%",
+          height: "auto"
+        }} />
       {session ? (
         <div className='flex flex-col'>
           ชื่อ {session.user?.name}
@@ -32,12 +35,15 @@ const Navbar = () => {
             alt='icon person'
             width={24}
             height={24}
-          />
+            style={{
+              maxWidth: "100%",
+              height: "auto"
+            }} />
           เข้าระบบ
         </Button>
       )}
     </div>
-  )
+  );
 }
 
 export default Navbar
