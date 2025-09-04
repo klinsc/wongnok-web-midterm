@@ -54,17 +54,19 @@ const Navbar = () => {
                   <ul>
                     <li>
                       <NavigationMenuLink asChild>
-                        <Link href='#'>โปรไฟล์ของฉัน</Link>
+                        <Link href={`/profile/${session.userId}`}>
+                          โปรไฟล์ของฉัน
+                        </Link>
                       </NavigationMenuLink>
                     </li>
                     <li>
                       <NavigationMenuLink asChild>
-                        <Link href='#'>สูตรอาหารของฉัน</Link>
+                        <Link href='/my-recipe'>สูตรอาหารของฉัน</Link>
                       </NavigationMenuLink>
                     </li>
                     <li>
                       <NavigationMenuLink asChild>
-                        <Link href='#'>สูตรอาหารสุดโปรด</Link>
+                        <Link href='/favorites'>สูตรอาหารสุดโปรด</Link>
                       </NavigationMenuLink>
                     </li>
                     <li>
