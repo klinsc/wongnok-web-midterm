@@ -55,7 +55,7 @@ export default function Home() {
       setRecipesData(data)
     },
   })
-  const limitDataPerPage = 5
+  const limitDataPerPage = 2
   const pathname = usePathname()
 
   const searchParams = useSearchParams()
@@ -128,32 +128,39 @@ export default function Home() {
       )}
       <Pagination>
         <PaginationContent>
+          {currentPage > 1 && (
+            <PaginationItem>
+              <PaginationPrevious
+                onClick={() => {
+                  setCurrentPage((prev) => {
+                    return prev <= 1 ? prev : prev - 1
+                  })
+                }}
+              />
+            </PaginationItem>
+          )}
           <PaginationItem>
-            <PaginationPrevious
-              onClick={() => {
-                setCurrentPage((prev) => {
-                  return prev <= 1 ? prev : prev - 1
-                })
-              }}
-            />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink>{currentPage}</PaginationLink>
+            <PaginationLink className='pointer-events-none'>
+              {currentPage}
+            </PaginationLink>
           </PaginationItem>
           {/* <PaginationItem>
             <PaginationEllipsis />
           </PaginationItem> */}
-          <PaginationItem>
-            <PaginationNext
-              onClick={() => {
-                setCurrentPage((prev) => {
-                  return prev >= Math.ceil(recipesData.total / limitDataPerPage)
-                    ? prev
-                    : prev + 1
-                })
-              }}
-            />
-          </PaginationItem>
+          {currentPage < Math.ceil(recipesData.total / limitDataPerPage) && (
+            <PaginationItem>
+              <PaginationNext
+                onClick={() => {
+                  setCurrentPage((prev) => {
+                    return prev >=
+                      Math.ceil(recipesData.total / limitDataPerPage)
+                      ? prev
+                      : prev + 1
+                  })
+                }}
+              />
+            </PaginationItem>
+          )}
         </PaginationContent>
       </Pagination>
     </div>
