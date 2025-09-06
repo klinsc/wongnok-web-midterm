@@ -146,7 +146,11 @@ export default function Profile({ userId }: ProfileProps) {
       </div>
       {isEditMode ? (
         <div className='flex flex-col items-center gap-2 mt-8 w-100'>
-          <Input placeholder='Avatar URL' ref={imageUrlRef} />
+          <Input
+            placeholder='Avatar URL'
+            defaultValue={profileData?.imageUrl}
+            ref={imageUrlRef}
+          />
           <Input
             placeholder='First Name'
             defaultValue={profileData?.firstName}
@@ -163,7 +167,7 @@ export default function Profile({ userId }: ProfileProps) {
         <div className='flex flex-col items-center gap-2 mt-8'>
           <Avatar className='w-32 h-32'>
             <AvatarImage
-              src={profileData?.imageUrl || 'https://github.com/shadcn.png'}
+              src={profileData?.imageUrl}
               alt='profile picture'
               className='w-32 h-32 rounded-full'
             />
