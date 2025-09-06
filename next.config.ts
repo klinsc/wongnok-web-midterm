@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
       new URL('https://dessertsmate.com/wp-content/uploads/**'),
     ],
   },
+  reactStrictMode: false,
 }
 
 export default nextConfig

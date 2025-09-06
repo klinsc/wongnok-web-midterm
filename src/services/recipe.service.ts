@@ -61,6 +61,11 @@ type fetchRecipeRequest = {
   search: string
 }
 
+export type FavoriteResponse = {
+  foodRecipeID: string
+  isFavorited: boolean
+}
+
 export const fetchRecipes = async (data: fetchRecipeRequest) => {
   try {
     const recipesFetch = await api.get<{
@@ -103,4 +108,23 @@ export const fetchRecipesByUser = async () => {
     }
   )
   return recipes.data.results
+}
+
+export const isRecipeFavorited = async (recipeId: string) => {
+  const isFavorited = await api.get<{ isFavorited: boolean }>(
+    `/api/v1/food-recipes/${recipeId}/favorite`
+  )
+
+  return isFavorited.data.isFavorited
+}
+
+export const favoriteRecipe = async (
+  recipeId: string,
+  isFavorited: boolean
+) => {
+  const response = await api.post<{ isFavorited: boolean }>(
+    `/api/v1/food-recipes/${recipeId}/favorite`,
+    { isFavorited }
+  )
+  return response.data.isFavorited
 }

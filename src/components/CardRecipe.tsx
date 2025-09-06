@@ -3,8 +3,15 @@ import { Heart } from 'lucide-react'
 import Image from 'next/image'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import { Card, CardContent, CardFooter } from './ui/card'
+import Link from 'next/link'
+import { Button } from './ui/button'
+import { favoriteRecipe, isRecipeFavorited } from '@/services/recipe.service'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { signIn, useSession } from 'next-auth/react'
+import { useMemo } from 'react'
 
 const CardRecipe = ({
+  id,
   name,
   imageUrl,
   description,
@@ -12,50 +19,82 @@ const CardRecipe = ({
   cookingDuration,
   user,
 }: CardRecipeProps) => {
-  let difficultyTh = ''
-  switch (difficulty.name) {
-    case 'Easy':
-      difficultyTh = 'ง่าย'
-      break
-    case 'Medium':
-      difficultyTh = 'ปานกลาง'
-      break
-    case 'Hard':
-      difficultyTh = 'ยาก'
-      break
-    default:
-      difficultyTh = difficulty.name
-  }
+  //session
+  const { data: session } = useSession()
 
-  const nameFallback = user?.firstName
-    ? user.firstName.charAt(0).toUpperCase() +
-      user.lastName.charAt(0).toUpperCase()
-    : 'User'
+  const difficultyTh = useMemo(() => {
+    switch (difficulty.name) {
+      case 'Easy':
+        return 'ง่าย'
+      case 'Medium':
+        return 'ปานกลาง'
+      case 'Hard':
+        return 'ยาก'
+      default:
+        return difficulty.name
+    }
+  }, [difficulty.name])
+
+  const nameFallback = useMemo(
+    () =>
+      user?.firstName
+        ? user.firstName.charAt(0).toUpperCase() +
+          user.lastName.charAt(0).toUpperCase()
+        : 'User',
+    [user]
+  )
+
+  const query = useQuery({
+    queryKey: ['isFavorited', id],
+    queryFn: () => isRecipeFavorited(id),
+    refetchOnWindowFocus(query) {
+      return false
+    },
+    enabled: !!session?.user,
+  })
+  const isFavorited = useMemo(() => {
+    if (query.data) {
+      return query.data
+    }
+    return false
+  }, [query.data])
+
+  const { mutateAsync: handleFavoriteRecipe } = useMutation({
+    mutationFn: () => favoriteRecipe(id, !isFavorited).then(() => !isFavorited),
+    onError: () => {
+      console.log('error fetching')
+    },
+    onSuccess: (data) => {
+      query.refetch()
+    },
+  })
 
   return (
     <Card className='w-[276px] h-[390px]'>
       <div>
-        <div className='h-[158px] relative rounded-t-lg pb-4'>
-          {imageUrl ? (
-            <Image
-              unoptimized
-              priority
-              src={imageUrl}
-              alt={`${name} image`}
-              fill
-              sizes='(max-width: 276px) 100vw, 276px'
-            />
-          ) : (
-            <Image
-              unoptimized
-              priority
-              src={'/images/istockphoto-1396814518-612x612.jpg'}
-              alt={`${name} image`}
-              fill
-              sizes='(max-width: 276px) 100vw, 276px'
-            />
-          )}
-        </div>
+        <Link href={`recipe-details/${id}`}>
+          <div className='h-[158px] relative rounded-t-lg pb-4'>
+            {imageUrl ? (
+              <Image
+                unoptimized
+                priority
+                src={imageUrl}
+                alt={`${name} image`}
+                fill
+                sizes='(max-width: 276px) 100vw, 276px'
+              />
+            ) : (
+              <Image
+                unoptimized
+                priority
+                src={'/images/istockphoto-1396814518-612x612.jpg'}
+                alt={`${name} image`}
+                fill
+                sizes='(max-width: 276px) 100vw, 276px'
+              />
+            )}
+          </div>
+        </Link>
         <div className='p-2'>
           <CardContent>
             <div
@@ -65,10 +104,23 @@ const CardRecipe = ({
                 alignItems: 'flex-start',
               }}
             >
-              <h1 className='font-bold max-w-[200px] line-clamp-1'>{name}</h1>
+              <Link href={`recipe-details/${id}`}>
+                <h1 className='font-bold max-w-[200px] line-clamp-1'>{name}</h1>
+              </Link>
 
               <div>
-                <Heart />
+                <Button
+                  variant='ghost'
+                  className='p-1 rounded-full'
+                  style={{
+                    cursor: 'pointer',
+                  }}
+                  onClick={() =>
+                    session?.user ? handleFavoriteRecipe() : signIn('keycloak')
+                  }
+                >
+                  <Heart size={18} fill={isFavorited ? 'red' : 'none'} />
+                </Button>
               </div>
             </div>
             <p className='text-secondary line-clamp-3'>{description}</p>
@@ -107,7 +159,9 @@ const CardRecipe = ({
             }}
           >
             <Avatar>
-              <AvatarImage src='https://github.com/shadcn.pn' />
+              {user.imageUrl && (
+                <AvatarImage src={user.imageUrl || ''} alt='Avatar' />
+              )}
               <AvatarFallback>{nameFallback}</AvatarFallback>
             </Avatar>
             <p

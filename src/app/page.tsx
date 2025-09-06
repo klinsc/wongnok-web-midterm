@@ -11,18 +11,11 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination'
-import { fetchRecipes, Recipe } from '@/services/recipe.service'
+import { fetchRecipes, Recipe, User } from '@/services/recipe.service'
 import { useMutation } from '@tanstack/react-query'
-import Link from 'next/link'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useDebouncedCallback } from 'use-debounce'
-
-type User = {
-  id: string
-  firstName: string
-  lastName: string
-}
 
 export type CardRecipeProps = {
   id: string
@@ -129,11 +122,7 @@ export default function Home() {
           {recipesData &&
             recipesData.results.length > 0 &&
             recipesData.results.map((recipe) => {
-              return (
-                <Link key={recipe.id} href={`recipe-details/${recipe.id}`}>
-                  <CardRecipe key={recipe.id} {...recipe} />
-                </Link>
-              )
+              return <CardRecipe key={recipe.id} {...recipe} />
             })}
         </div>
       )}
