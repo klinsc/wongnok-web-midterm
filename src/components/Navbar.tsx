@@ -66,7 +66,7 @@ const Navbar = () => {
                     </li>
                     <li>
                       <NavigationMenuLink asChild>
-                        <Link href='/favorites'>สูตรอาหารสุดโปรด</Link>
+                        <Link href='/favorites'>เมนูโปรดของฉัน</Link>
                       </NavigationMenuLink>
                     </li>
                     <li>

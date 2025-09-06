@@ -128,3 +128,15 @@ export const favoriteRecipe = async (
   )
   return response.data.isFavorited
 }
+
+export const getFavorites = async (data: fetchRecipeRequest) => {
+  try {
+    const response = await api.get<{ results: Recipe[]; total: number }>(
+      `/api/v1/food-recipes/favorites?page=${data.page}&limit=${data.limit}&search=${data.search}`
+    )
+    return response.data
+  } catch (e) {
+    console.error(e)
+    return { results: [], total: 0 }
+  }
+}
