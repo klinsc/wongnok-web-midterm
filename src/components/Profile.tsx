@@ -98,6 +98,14 @@ export default function Profile({ userId }: ProfileProps) {
     if (imageUrlRef.current?.value) {
       // Assuming you have an imageUrl field in your User type
       ;(updatedData as any).imageUrl = imageUrlRef.current.value || null
+
+      // Check if not valid URL
+      try {
+        new URL(imageUrlRef.current.value)
+      } catch (_) {
+        alert('Invalid URL')
+        return
+      }
     }
     if (firstNameRef.current?.value) {
       updatedData.firstName = firstNameRef.current.value
@@ -150,6 +158,7 @@ export default function Profile({ userId }: ProfileProps) {
             placeholder='Avatar URL'
             defaultValue={profileData?.imageUrl}
             ref={imageUrlRef}
+            type='url'
           />
           <Input
             placeholder='First Name'
