@@ -110,32 +110,37 @@ export default function Favorites() {
       )}
       <Pagination>
         <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious
-              onClick={() => {
-                setCurrentPage((prev) => {
-                  return prev <= 1 ? prev : prev - 1
-                })
-              }}
-            />
-          </PaginationItem>
+          {currentPage > 1 && (
+            <PaginationItem>
+              <PaginationPrevious
+                onClick={() => {
+                  setCurrentPage((prev) => {
+                    return prev <= 1 ? prev : prev - 1
+                  })
+                }}
+              />
+            </PaginationItem>
+          )}
           <PaginationItem>
             <PaginationLink>{currentPage}</PaginationLink>
           </PaginationItem>
           {/* <PaginationItem>
             <PaginationEllipsis />
           </PaginationItem> */}
-          <PaginationItem>
-            <PaginationNext
-              onClick={() => {
-                setCurrentPage((prev) => {
-                  return prev >= Math.ceil(recipesData.total / limitDataPerPage)
-                    ? prev
-                    : prev + 1
-                })
-              }}
-            />
-          </PaginationItem>
+          {currentPage < Math.ceil(recipesData.total / limitDataPerPage) && (
+            <PaginationItem>
+              <PaginationNext
+                onClick={() => {
+                  setCurrentPage((prev) => {
+                    return prev >=
+                      Math.ceil(recipesData.total / limitDataPerPage)
+                      ? prev
+                      : prev + 1
+                  })
+                }}
+              />
+            </PaginationItem>
+          )}
         </PaginationContent>
       </Pagination>
     </>
